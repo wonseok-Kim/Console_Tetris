@@ -62,7 +62,7 @@ namespace ws
             OutputScreen();
         }
 
-        CheckStack();
+        CheckLines();
         
         if (IsStackable())
         {
@@ -97,6 +97,40 @@ namespace ws
         }
 
         return false;
+    }
+
+    void Tetris::CheckLines()
+    {
+        for (int y{ 0 }; y < GetHeight() - 2; ++y)
+        {
+            if (IsFullLine(y))
+            {
+                BombOneLine(y);
+            }
+        }
+    }
+
+    void Tetris::BombOneLine(int y)
+    {
+        for (int row{ y }; row < GetHeight() - 1; ++row)
+        {
+            for (int col{ 0 }; col < GetWidth() - 1; ++col)
+            {
+                Draw(col, row, GetShape(col, row + 1));
+                Draw(col, row + 1, Shape::blank);
+            }
+        }
+    }
+
+    bool Tetris::IsFullLine(int y)
+    {
+        vec2 pos{ 0, y };
+        for (; pos.x < GetWidth(); ++pos.x)
+        {
+            if (GetShape(pos) != Shape::stack)
+                return false;
+        }
+        return true;
     }
     
     void Tetris::SetBlockStacked()

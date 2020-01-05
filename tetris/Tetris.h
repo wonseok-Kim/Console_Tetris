@@ -22,39 +22,11 @@ namespace ws
 
         bool IsStackable();
 
-        void CheckStack()
-        {
-            for (int y{ 0 }; y < GetHeight() - 2; ++y)
-            {
-                if (IsFull(y))
-                {
-                    BombOneLine(y);
-                }
-            }
-        }
+        void CheckLines();
 
-        void BombOneLine(int y)
-        {
-            for (int row{ y }; row < GetHeight() - 1; ++row)
-            {
-                for (int col{ 0 }; col < GetWidth() - 1; ++col)
-                {
-                    Draw(col, row, GetShape(col, row + 1));
-                    Draw(col, row + 1, Shape::blank);
-                }
-            }
-        }
+        void BombOneLine(int y);
 
-        bool IsFull(int y)
-        {
-            vec2 pos{ 0, y };
-            for (; pos.x < GetWidth(); ++pos.x)
-            {
-                if (GetShape(pos) != Shape::stack)
-                    return false;
-            }
-            return true;
-        }
+        bool IsFullLine(int y);
 
         void SetBlockStacked();
 
@@ -64,7 +36,5 @@ namespace ws
         bool mbBlockIsCreated;
     };
 }
-
-namespace 섹스보지잠지 {}
 
 #endif // !TETRIS_H

@@ -2,7 +2,7 @@
 
 int main()
 {
-     ws::Tetris{}.Run();
-    
+    ws::Tetris{}.Run();
+
     return 0;
 }

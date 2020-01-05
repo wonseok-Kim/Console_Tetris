@@ -15,7 +15,7 @@ namespace ws
         mNextIndex = rand() % 7;
     }
 
-    bool Block::Draw(ConsoleEngine& game, vec2& drawingPos)
+    bool Block::Draw(ConsoleEngine& game, const vec2& drawingPos)
     {
         mBelowPos.clear();
         if (mBlockPos.size() > 0)
@@ -27,6 +27,24 @@ namespace ws
             mBlockPos.clear();
         }
 
+        if (!CheckDrawingPossible(game, drawingPos, true))
+            return true;
+
+    go_back:
+        for (int i{ 0 }; i < mBelowPos.size(); ++i)
+        {
+            if (game.GetShape(mBelowPos[i]) == Shape::block)
+            {
+                mBelowPos.erase(mBelowPos.begin() + i);
+                goto go_back;
+            }
+        }
+
+        return true;
+    }
+
+    bool Block::CheckDrawingPossible(ConsoleEngine& game, const vec2& drawingPos, bool bRecord)
+    {
         for (int y{ 0 }; y < 4; ++y)
         {
             for (int x{ 0 }; x < 4; ++x)
@@ -35,27 +53,20 @@ namespace ws
                 {
                     vec2 pos{ drawingPos.x + x, drawingPos.y - y };
 
-                    if (game.GetShape(pos) == Shape::stack)
+                    if (auto temp{ game.GetShape(pos) };
+                        temp == Shape::boundary || temp == Shape::stack)
                         return false;
-                    
+
                     game.Draw(pos, Shape::block);
 
-                    mBlockPos.push_back(pos);
-                    mBelowPos.push_back({ pos.x, pos.y - 1 });
+                    if (bRecord)
+                    {
+                        mBlockPos.push_back(pos);
+                        mBelowPos.push_back({ pos.x, pos.y - 1 });
+                    }
                 }
             }
         }
-
-    sorry:
-        for (int i{ 0 }; i < mBelowPos.size(); ++i)
-        {
-            if (game.GetShape(mBelowPos[i]) == Shape::block)
-            {
-                mBelowPos.erase(mBelowPos.begin() + i);
-                goto sorry;
-            }
-        }
-
         return true;
     }
 
@@ -63,66 +74,46 @@ namespace ws
     {
         TurnRight();
 
-        for (int y{ 0 }; y < 4; ++y)
+        try
         {
-            for (int x{ 0 }; x < 4; ++x)
+            if (CheckDrawingPossible(game, drawingPos, false))
             {
-                if (checkBitmask(x, y))
-                {
-                    try
-                    {
-                        vec2 pos{ drawingPos.x + x, drawingPos.y - y };
-
-                        if (auto temp{ game.GetShape(pos) };
-                            temp == Shape::boundary || temp == Shape::stack)
-                        {
-                            TurnLeft();
-                            return false;
-                        }
-                    }
-                    catch (...)
-                    {
-                        TurnLeft();
-                        return false;
-                    }
-                }
+                TurnLeft();
+                return true;
+            }
+            else
+            {
+                TurnLeft();
+                return false;
             }
         }
-        TurnLeft();
-        return true;
+        catch (...)
+        {
+            return false;
+        }
     }
 
     bool Block::IsPossibleTurnLeft(ConsoleEngine& game, vec2& drawingPos)
     {
         TurnLeft();
 
-        for (int y{ 0 }; y < 4; ++y)
+        try
         {
-            for (int x{ 0 }; x < 4; ++x)
+            if (CheckDrawingPossible(game, drawingPos, false))
             {
-                try
-                {
-                    if (checkBitmask(x, y))
-                    {
-                        vec2 pos{ drawingPos.x + x, drawingPos.y - y };
-
-                        if (auto temp{ game.GetShape(pos) };
-                            temp == Shape::boundary || temp == Shape::stack)
-                        {
-                            TurnRight();
-                            return false;
-                        }
-                    }
-                }
-                catch (...)
-                {
-                    TurnRight();
-                    return false;
-                }
+                TurnRight();
+                return true;
+            }
+            else
+            {
+                TurnRight();
+                return false;
             }
         }
-        TurnRight();
-        return true;
+        catch (...)
+        {
+            return false;
+        }
     }
 
     void Block::TurnRight()

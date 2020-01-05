@@ -79,20 +79,22 @@ namespace ws
 
         int GetWidth() const { return mWidth -2; }     // minus boundary
         int GetHeight() const { return mHeight - 2; }  // minus boundary
+
         Shape GetShape(int x, int y)
         {
             if (x < -1 || x > GetWidth() ||
-                y < -1 || y > GetHeight() - 1)
+                y < -1 || y > GetHeight())
             {
                 throw - 1;
             }
             vec2 temp{ convertPosition(x, y) };
             return mBackBuffer[temp.y][temp.x];
         }
+
         Shape GetShape(const vec2& pos)
         {
             if (pos.x < -1 || pos.x > GetWidth() ||
-                pos.y < -1 || pos.y > GetHeight() - 1)
+                pos.y < -1 || pos.y > GetHeight())
             {
                 throw - 1;
             }

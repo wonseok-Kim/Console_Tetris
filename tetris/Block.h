@@ -12,16 +12,17 @@ namespace ws
     public:
         using vec2 = Vector2<int>;
 
-        Block(int x = 0, int y = 0)
+        Block()
         {
-            //mPreviousPos.reserve(4);
             mBelowPos.reserve(4);
             mBlockPos.reserve(4);
         }
 
         void Select();
 
-        bool Draw(ConsoleEngine& game, vec2& drawingPos);
+        bool CheckDrawingPossible(ConsoleEngine& game, const vec2& drawingPos, bool bRecord);
+
+        bool Draw(ConsoleEngine& game, const vec2& drawingPos);    
 
         bool IsPossibleTurnRight(ConsoleEngine& game, vec2& drawingPos);
         bool IsPossibleTurnLeft(ConsoleEngine& game, vec2& drawingPos);
@@ -51,7 +52,6 @@ namespace ws
         };
 
         std::vector<vec2> mBelowPos;
-        //std::vector<vec2> mPreviousPos;
         std::vector<vec2> mBlockPos;
 
         int mCurrentIndex{ 0 };
