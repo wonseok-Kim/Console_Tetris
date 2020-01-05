@@ -65,6 +65,4 @@ namespace ws
     };
 }
 
-namespace 섹스보지잠지 {}
-
 #endif // !TETRIS_H
