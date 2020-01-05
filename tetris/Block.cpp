@@ -28,18 +28,19 @@ namespace ws
         }
 
         if (!CheckDrawingPossible(game, drawingPos, true))
-            return true;
+            return false;
 
-    go_back:
+    loop_again:
         for (int i{ 0 }; i < mBelowPos.size(); ++i)
         {
             if (game.GetShape(mBelowPos[i]) == Shape::block)
             {
                 mBelowPos.erase(mBelowPos.begin() + i);
-                goto go_back;
+                // Because index modified when erased, loop again
+                goto loop_again;
             }
         }
-
+        
         return true;
     }
 
@@ -70,7 +71,7 @@ namespace ws
         return true;
     }
 
-    bool Block::IsPossibleTurnRight(ConsoleEngine& game, vec2& drawingPos)
+    bool Block::IsPossibleTurnRight(ConsoleEngine& game, const vec2& drawingPos)
     {
         TurnRight();
 
@@ -93,7 +94,7 @@ namespace ws
         }
     }
 
-    bool Block::IsPossibleTurnLeft(ConsoleEngine& game, vec2& drawingPos)
+    bool Block::IsPossibleTurnLeft(ConsoleEngine& game, const vec2& drawingPos)
     {
         TurnLeft();
 

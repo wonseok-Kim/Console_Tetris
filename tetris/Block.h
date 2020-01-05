@@ -24,8 +24,8 @@ namespace ws
 
         bool Draw(ConsoleEngine& game, const vec2& drawingPos);    
 
-        bool IsPossibleTurnRight(ConsoleEngine& game, vec2& drawingPos);
-        bool IsPossibleTurnLeft(ConsoleEngine& game, vec2& drawingPos);
+        bool IsPossibleTurnRight(ConsoleEngine& game, const vec2& drawingPos);
+        bool IsPossibleTurnLeft(ConsoleEngine& game, const vec2& drawingPos);
 
         void TurnRight();
         void TurnLeft();

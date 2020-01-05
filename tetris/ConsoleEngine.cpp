@@ -41,7 +41,7 @@ namespace ws
     void ConsoleEngine::init()
     {
         std::srand(static_cast<unsigned>(std::time(0)));
-        std::rand();
+        std::rand();  // dummy
 
         CONSOLE_CURSOR_INFO cursorInfo = { 0, };
         cursorInfo.dwSize = 1;
