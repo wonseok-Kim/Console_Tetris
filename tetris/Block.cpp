@@ -49,7 +49,7 @@ namespace ws
             if (game.GetShape(mBelowPos[i]) == Shape::block)
             {
                 mBelowPos.erase(mBelowPos.begin() + i);
-                // Because index modified when erased, loop again
+                // Because index modified when erased, begin loop again
                 goto loop_again;
             }
         }
@@ -65,15 +65,16 @@ namespace ws
             {
                 if (checkBitmask(x, y))
                 {
-                    try
+                    try  
                     {
                         vec2 pos{ drawingPos.x + x, drawingPos.y - y };
 
-                        if (auto temp{ game.GetShape(pos) };
+                        // When Invalid pos passed to GetShape, throw std::out_of_range
+                        if (auto temp{ game.GetShape(pos) }; 
                             temp == Shape::boundary || temp == Shape::stack)
                             return false;
                     }
-                    catch (...)
+                    catch (const std::out_of_range &e)
                     {
                         return false;
                     }

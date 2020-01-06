@@ -41,7 +41,7 @@ namespace ws
 
         virtual void Update() = 0;
 
-        void OutputScreen();
+        void OutputScreen();        
 
         void Draw(int x, int y, Shape shape);
         void Draw(const vec2& pos, Shape shape);

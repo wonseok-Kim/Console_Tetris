@@ -70,24 +70,14 @@ namespace ws
 
     Shape ConsoleEngine::GetShape(int x, int y)
     {
-        if (x < -1 || x > GetWidth() ||
-            y < -1 || y > GetHeight())
-        {
-            throw - 1;
-        }
         vec2 temp{ convertPosition(x, y) };
-        return mBackBuffer[temp.y][temp.x];
+        return mBackBuffer.at(temp.y).at(temp.x);
     }
 
     Shape ConsoleEngine::GetShape(const vec2& pos)
     {
-        if (pos.x < -1 || pos.x > GetWidth() ||
-            pos.y < -1 || pos.y > GetHeight())
-        {
-            throw - 1;
-        }
         vec2 temp{ convertPosition(pos) };
-        return mBackBuffer[temp.y][temp.x];
+        return mBackBuffer.at(temp.y).at(temp.x);
     }
 
     void ConsoleEngine::moveCursorTo(short x, short y)
