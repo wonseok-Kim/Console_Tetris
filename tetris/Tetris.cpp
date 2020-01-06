@@ -10,10 +10,12 @@ namespace ws
             mDrawingPos = vec2{ GetWidth() / 2 - 2, GetHeight() - 1 };
             mbBlockIsCreated = true;
         }
-        if (mBlock.Draw(*this, mDrawingPos) == false) { ExitGame(); }
 
-        OutputScreen();
-
+        if (mBlock.CheckDrawingPossible(*this, mDrawingPos))
+            mBlock.Draw(*this, mDrawingPos);
+        else
+            ExitGame();
+        
         if (IsKeyPressing())
         {
             bool bMovePossible{ true };
@@ -21,12 +23,13 @@ namespace ws
             {
                 for (const auto& pos : mBlock.GetBlockPos())
                 {
-                    if (pos.x == 0)
+                    if (pos.x <= 0)
                         bMovePossible = false;
 
-                    if (GetShape(pos.x - 1, pos.y) == Shape::stack)
+                    if (auto temp{ GetShape(pos.x - 1, pos.y) };
+                        temp == Shape::stack || temp == Shape::boundary)
                         bMovePossible = false;
-                }
+                }                
                 if (bMovePossible)
                     --mDrawingPos.x;
             }
@@ -58,8 +61,10 @@ namespace ws
                 }
             }
 
-            if (mBlock.Draw(*this, mDrawingPos) == false) { ExitGame(); }
-            OutputScreen();
+            if (mBlock.CheckDrawingPossible(*this, mDrawingPos))
+                mBlock.Draw(*this, mDrawingPos);
+            else
+                ExitGame();            
         }
 
         CheckLines();
@@ -99,12 +104,23 @@ namespace ws
         return false;
     }
 
+    void Tetris::ShowEffect(int y)
+    {
+        for (int x{ 0 }; x < GetWidth(); ++x)
+        {
+            Draw(x, y, Shape::effect);
+        }
+    }
+
     void Tetris::CheckLines()
     {
         for (int y{ 0 }; y < GetHeight() - 2; ++y)
         {
             if (IsFullLine(y))
             {
+                ShowEffect(y);
+                mBlock.Draw(*this, mDrawingPos);
+                Sleep(100);
                 BombOneLine(y);
             }
         }
@@ -114,7 +130,7 @@ namespace ws
     {
         for (int row{ y }; row < GetHeight() - 1; ++row)
         {
-            for (int col{ 0 }; col < GetWidth() - 1; ++col)
+            for (int col{ 0 }; col < GetWidth(); ++col)
             {
                 Draw(col, row, GetShape(col, row + 1));
                 Draw(col, row + 1, Shape::blank);

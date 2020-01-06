@@ -22,6 +22,8 @@ namespace ws
 
         bool IsStackable();
 
+        void ShowEffect(int y);
+
         void CheckLines();
 
         void BombOneLine(int y);

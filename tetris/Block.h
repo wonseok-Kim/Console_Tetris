@@ -20,7 +20,7 @@ namespace ws
 
         void Select();
 
-        bool CheckDrawingPossible(ConsoleEngine& game, const vec2& drawingPos, bool bRecord);
+        bool CheckDrawingPossible(ConsoleEngine& game, const vec2& drawingPos);
 
         bool Draw(ConsoleEngine& game, const vec2& drawingPos);    
 

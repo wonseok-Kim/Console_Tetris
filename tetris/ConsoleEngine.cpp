@@ -28,6 +28,7 @@ namespace ws
                     case Shape::blank: std::cout << "  "; break;
                     case Shape::block: std::cout << "бс"; break;
                     case Shape::stack: std::cout << "бс"; break;
+                    case Shape::effect: std::cout << "в═"; break;
                     case Shape::boundary: std::cout << "бс"; break;
                     default: assert(0);
 
@@ -36,6 +37,64 @@ namespace ws
             }
         }
         Sleep(33);
+    }
+
+    void ConsoleEngine::Draw(int x, int y, Shape shape)
+    {
+        vec2 temp{ convertPosition(x, y) };
+
+        mBackBuffer[temp.y][temp.x] = shape;
+    }
+
+    void ConsoleEngine::Draw(const vec2& pos, Shape shape)
+    {
+        vec2 temp{ convertPosition(pos) };
+
+        mBackBuffer[temp.y][temp.x] = shape;
+    }
+
+    bool ConsoleEngine::IsKeyPressing()
+    {
+        bool bPressing{ (_kbhit() != 0) ? true : false };
+
+        if (bPressing)
+        {
+            mInputKey = _getch();
+
+            if (mInputKey == KEY_ARROWS_FLAG)
+                mInputKey = _getch();
+        }
+
+        return bPressing;
+    }
+
+    Shape ConsoleEngine::GetShape(int x, int y)
+    {
+        if (x < -1 || x > GetWidth() ||
+            y < -1 || y > GetHeight())
+        {
+            throw - 1;
+        }
+        vec2 temp{ convertPosition(x, y) };
+        return mBackBuffer[temp.y][temp.x];
+    }
+
+    Shape ConsoleEngine::GetShape(const vec2& pos)
+    {
+        if (pos.x < -1 || pos.x > GetWidth() ||
+            pos.y < -1 || pos.y > GetHeight())
+        {
+            throw - 1;
+        }
+        vec2 temp{ convertPosition(pos) };
+        return mBackBuffer[temp.y][temp.x];
+    }
+
+    void ConsoleEngine::moveCursorTo(short x, short y)
+    {
+        COORD cursorPos = { static_cast<short>(x * 2), static_cast<short>(mHeight - y - 1) };
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos);
     }
 
     void ConsoleEngine::init()
@@ -49,12 +108,13 @@ namespace ws
         SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 
         mBackBuffer.resize(mHeight);
-        for (auto& row : mBackBuffer)
-        {
-            row.resize(mWidth);
-        }
+        for (auto& col : mBackBuffer)
+            col.resize(mWidth);
 
-        mFrontBuffer = mBackBuffer;
+        mFrontBuffer.resize(mHeight);
+        for (auto& col : mFrontBuffer)
+            col.resize(mHeight);
+             
 
         for (int y{ 0 }; y < mHeight; ++y)
         {

@@ -13,9 +13,9 @@ int main()
     std::cin >> height;
 
     std::cout << "block moving  : use ¡ç and ¡æ\n";
-    std::cout << "block rotating: use z  and  x\n";
+    std::cout << "block rotating: use z  and x\n";
     std::cout << "\nPress any key to start game.\n";
-    
+
     _getch();
     std::system("cls");
 
