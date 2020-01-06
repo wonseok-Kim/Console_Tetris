@@ -43,13 +43,12 @@ namespace ws
             }
         }
         
-    loop_again:
+    loop_again: // Because index was modified when erased, begin loop again
         for (int i{ 0 }; i < mBelowPos.size(); ++i)
         {
             if (game.GetShape(mBelowPos[i]) == Shape::block)
             {
                 mBelowPos.erase(mBelowPos.begin() + i);
-                // Because index modified when erased, begin loop again
                 goto loop_again;
             }
         }

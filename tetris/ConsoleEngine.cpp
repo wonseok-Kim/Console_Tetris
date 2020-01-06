@@ -42,14 +42,12 @@ namespace ws
     void ConsoleEngine::Draw(int x, int y, Shape shape)
     {
         vec2 temp{ convertPosition(x, y) };
-
         mBackBuffer[temp.y][temp.x] = shape;
     }
 
     void ConsoleEngine::Draw(const vec2& pos, Shape shape)
     {
         vec2 temp{ convertPosition(pos) };
-
         mBackBuffer[temp.y][temp.x] = shape;
     }
 
@@ -87,11 +85,13 @@ namespace ws
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos);
     }
 
+    
     void ConsoleEngine::init()
     {
         std::srand(static_cast<unsigned>(std::time(0)));
-        std::rand();  // dummy
+        std::rand();  // learncpp.com에서 vs는 첫 rand()값을 버려야 된다네요.
 
+        // make cursor nonvisible
         CONSOLE_CURSOR_INFO cursorInfo = { 0, };
         cursorInfo.dwSize = 1;
         cursorInfo.bVisible = FALSE;
