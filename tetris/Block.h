@@ -4,10 +4,11 @@
 #include <array>
 
 #include "ConsoleEngine.h"
+#include "ControlObject.h"
 
 namespace ws
 {
-    class Block
+    class Block : public ControlObject
     {
     public:
         using vec2 = Vector2<int>;
@@ -22,13 +23,15 @@ namespace ws
 
         bool CheckDrawingPossible(ConsoleEngine& game, const vec2& drawingPos);
 
-        bool Draw(ConsoleEngine& game, const vec2& drawingPos);    
+        void Draw(ConsoleEngine& game, const vec2& drawingPos);    
 
-        bool IsPossibleTurnRight(ConsoleEngine& game, const vec2& drawingPos);
-        bool IsPossibleTurnLeft(ConsoleEngine& game, const vec2& drawingPos);
+        void MoveRight(ConsoleEngine& game, vec2& drawingPos) override;
+        void MoveLeft(ConsoleEngine& game, vec2& drawingPos) override;
 
-        void TurnRight();
-        void TurnLeft();
+        void TurnRight(ConsoleEngine& game, const vec2& drawingPos) override;
+        void TurnLeft(ConsoleEngine& game, const vec2& drawingPos) override;
+
+        void FallImmediate(ConsoleEngine& game, vec2& drawingPos);
 
         auto GetBelowPos() const -> const std::vector<vec2>& { return mBelowPos; }
         auto GetBlockPos() const -> const std::vector<vec2>& { return mBlockPos; }
@@ -39,6 +42,12 @@ namespace ws
         bool checkBitmask(int x, int y);
 
         void erasePreviousBlock(ConsoleEngine& game);
+
+        bool isPossibleTurnRight(ConsoleEngine& game, const vec2& drawingPos);
+        bool isPossibleTurnLeft(ConsoleEngine& game, const vec2& drawingPos);
+
+        void rotateRight();
+        void rotateLeft();
 
     private:
         std::array<std::array<int, 4>, 7> mBlocks{

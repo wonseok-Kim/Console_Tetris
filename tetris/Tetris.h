@@ -3,6 +3,7 @@
 
 #include "Block.h"
 #include "ConsoleEngine.h"
+#include "InputHandler.h"
 
 namespace ws
 {
@@ -14,7 +15,12 @@ namespace ws
             , mBlock{}
             , mDrawingPos{}
             , mbBlockIsCreated{ false }
-        { }
+        {
+            inputHandler.SetCommand(KEY_RIGHT) = new CommandMoveRight{};
+            inputHandler.SetCommand(KEY_LEFT) = new CommandMoveLeft{};
+            inputHandler.SetCommand(KEY_Z) = new CommandTurnLeft{};
+            inputHandler.SetCommand(KEY_X) = new CommandTurnRight{};
+        }
 
         void Update() override;
 
@@ -33,6 +39,7 @@ namespace ws
         void SetBlockStacked();
 
     private:
+        InputHandler inputHandler;
         Block mBlock;
         vec2 mDrawingPos;
         bool mbBlockIsCreated;

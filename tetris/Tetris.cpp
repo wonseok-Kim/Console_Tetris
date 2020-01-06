@@ -18,53 +18,12 @@ namespace ws
         
         if (IsKeyPressing())
         {
-            bool bMovePossible{ true };
-            if (IsKeyPressed(KEY_LEFT))
-            {
-                for (const auto& pos : mBlock.GetBlockPos())
-                {
-                    if (pos.x <= 0)
-                        bMovePossible = false;
-
-                    if (auto temp{ GetShape(pos.x - 1, pos.y) };
-                        temp == Shape::stack || temp == Shape::boundary)
-                        bMovePossible = false;
-                }                
-                if (bMovePossible)
-                    --mDrawingPos.x;
-            }
-            else if (IsKeyPressed(KEY_RIGHT))
-            {
-                for (const auto& pos : mBlock.GetBlockPos())
-                {
-                    if (pos.x == GetWidth() - 1)
-                        bMovePossible = false;
-
-                    if (GetShape(pos.x + 1, pos.y) == Shape::stack)
-                        bMovePossible = false;
-                }
-                if (bMovePossible)
-                    ++mDrawingPos.x;
-            }
-            else if (IsKeyPressed(KEY_Z))
-            {
-                if (mBlock.IsPossibleTurnLeft(*this, mDrawingPos))
-                {
-                    mBlock.TurnLeft();
-                }
-            }
-            else if (IsKeyPressed(KEY_X))
-            {
-                if (mBlock.IsPossibleTurnRight(*this, mDrawingPos))
-                {
-                    mBlock.TurnRight();
-                }
-            }
+            inputHandler.Handle(*this, mBlock, mDrawingPos);
 
             if (mBlock.CheckDrawingPossible(*this, mDrawingPos))
                 mBlock.Draw(*this, mDrawingPos);
             else
-                ExitGame();            
+                ExitGame();
         }
 
         CheckLines();
@@ -108,7 +67,7 @@ namespace ws
     {
         for (int x{ 0 }; x < GetWidth(); ++x)
         {
-            Draw(x, y, Shape::effect);
+            SetScreenBuffer(x, y, Shape::effect);
         }
     }
 
@@ -132,8 +91,8 @@ namespace ws
         {
             for (int col{ 0 }; col < GetWidth(); ++col)
             {
-                Draw(col, row, GetShape(col, row + 1));
-                Draw(col, row + 1, Shape::blank);
+                SetScreenBuffer(col, row, GetShape(col, row + 1));
+                SetScreenBuffer(col, row + 1, Shape::blank);
             }
         }
     }
@@ -153,7 +112,7 @@ namespace ws
     {
         for (const auto& pos : mBlock.GetBlockPos())
         {
-            Draw(pos, Shape::stack);
+            SetScreenBuffer(pos, Shape::stack);
         }
     }
 }

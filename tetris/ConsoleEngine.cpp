@@ -39,13 +39,13 @@ namespace ws
         Sleep(33);
     }
 
-    void ConsoleEngine::Draw(int x, int y, Shape shape)
+    void ConsoleEngine::SetScreenBuffer(int x, int y, Shape shape)
     {
         vec2 temp{ convertPosition(x, y) };
         mBackBuffer[temp.y][temp.x] = shape;
     }
 
-    void ConsoleEngine::Draw(const vec2& pos, Shape shape)
+    void ConsoleEngine::SetScreenBuffer(const vec2& pos, Shape shape)
     {
         vec2 temp{ convertPosition(pos) };
         mBackBuffer[temp.y][temp.x] = shape;
@@ -69,12 +69,14 @@ namespace ws
     Shape ConsoleEngine::GetShape(int x, int y)
     {
         vec2 temp{ convertPosition(x, y) };
+
         return mBackBuffer.at(temp.y).at(temp.x);
     }
 
     Shape ConsoleEngine::GetShape(const vec2& pos)
     {
         vec2 temp{ convertPosition(pos) };
+
         return mBackBuffer.at(temp.y).at(temp.x);
     }
 

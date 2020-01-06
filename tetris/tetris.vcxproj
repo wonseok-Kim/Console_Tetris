@@ -159,7 +159,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="ConsoleEngine.h" />
+    <ClInclude Include="ControlObject.h" />
+    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyMacro.h" />
     <ClInclude Include="Tetris.h" />
     <ClInclude Include="Vector2D.h" />

@@ -43,8 +43,8 @@ namespace ws
 
         void OutputScreen();        
 
-        void Draw(int x, int y, Shape shape);
-        void Draw(const vec2& pos, Shape shape);
+        void SetScreenBuffer(int x, int y, Shape shape);
+        void SetScreenBuffer(const vec2& pos, Shape shape);
 
         bool IsKeyPressing();
         bool IsKeyPressed(int flag) { return (flag == mInputKey); }
