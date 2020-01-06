@@ -31,7 +31,6 @@ namespace ws
                     case Shape::effect: std::cout << "♨"; break;
                     case Shape::boundary: std::cout << "■"; break;
                     default: assert(0);
-
                     }
                 }
             }
@@ -91,7 +90,7 @@ namespace ws
     void ConsoleEngine::init()
     {
         std::srand(static_cast<unsigned>(std::time(0)));
-        std::rand();  // learncpp.com에서 vs는 첫 rand()값을 버려야 된다네요.
+        std::rand();  // learncpp.com에서 VS는 첫 rand()값을 버려야 된다네요.
 
         // make cursor nonvisible
         CONSOLE_CURSOR_INFO cursorInfo = { 0, };
@@ -107,7 +106,6 @@ namespace ws
         for (auto& col : mFrontBuffer)
             col.resize(mHeight);
              
-
         for (int y{ 0 }; y < mHeight; ++y)
         {
             for (int x{ 0 }; x < mWidth; ++x)

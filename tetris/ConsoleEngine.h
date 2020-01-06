@@ -39,7 +39,7 @@ namespace ws
 
         void Run(); // 게임 메인 루프가 있는 함수
 
-        virtual void Update() = 0;
+        virtual void Update() = 0;  // Game main logic
 
         void OutputScreen();        
 
@@ -52,8 +52,8 @@ namespace ws
         int GetWidth() const { return mWidth -2; }     // minus boundary
         int GetHeight() const { return mHeight - 2; }  // minus boundary
 
-        Shape GetShape(int x, int y);
-        Shape GetShape(const vec2& pos);
+        Shape GetShape(int x, int y);    // can throw std::out_of_range
+        Shape GetShape(const vec2& pos); // can throw std::out_of_range
 
     private:
         // 왼쪽 아래를 (0,0)으로 하고 싶어서 화면 출력할 때는 윈도우 좌표계?로 변환해줌

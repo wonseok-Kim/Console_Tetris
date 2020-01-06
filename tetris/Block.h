@@ -31,7 +31,7 @@ namespace ws
         void TurnRight(ConsoleEngine& game, const vec2& drawingPos) override;
         void TurnLeft(ConsoleEngine& game, const vec2& drawingPos) override;
 
-        void FallImmediate(ConsoleEngine& game, vec2& drawingPos);
+        void FallImmediate(ConsoleEngine& game, vec2& drawingPos) override;
 
         auto GetBelowPos() const -> const std::vector<vec2>& { return mBelowPos; }
         auto GetBlockPos() const -> const std::vector<vec2>& { return mBlockPos; }

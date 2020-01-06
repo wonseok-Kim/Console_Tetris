@@ -15,6 +15,8 @@ namespace ws
 
         virtual void TurnRight(ConsoleEngine& game, const vec2& drawingPos) = 0;
         virtual void TurnLeft(ConsoleEngine& game, const vec2& drawingPos) = 0;
+
+        virtual void FallImmediate(ConsoleEngine& game, vec2& drawingPos) = 0;
     };
 }
 

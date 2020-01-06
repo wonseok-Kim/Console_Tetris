@@ -32,6 +32,15 @@ namespace ws
         }
     };
 
+    class CommandMoveDown : public Command
+    {
+    public:
+        void Execute(ConsoleEngine& game, ControlObject& object, vec2& drawingPos) override
+        {
+            object.FallImmediate(game, drawingPos);
+        }
+    };
+
     class CommandTurnRight : public Command
     {
     public:

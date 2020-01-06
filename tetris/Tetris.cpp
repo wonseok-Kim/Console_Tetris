@@ -63,11 +63,11 @@ namespace ws
         return false;
     }
 
-    void Tetris::ShowEffect(int y)
+    void Tetris::SetEffectLine(int line)
     {
         for (int x{ 0 }; x < GetWidth(); ++x)
         {
-            SetScreenBuffer(x, y, Shape::effect);
+            SetScreenBuffer(x, line, Shape::effect);
         }
     }
 
@@ -77,17 +77,17 @@ namespace ws
         {
             if (IsFullLine(y))
             {
-                ShowEffect(y);
-                mBlock.Draw(*this, mDrawingPos);
+                SetEffectLine(y);
+                OutputScreen();
                 Sleep(100);
-                BombOneLine(y);
+                EraseLine(y);
             }
         }
     }
 
-    void Tetris::BombOneLine(int y)
+    void Tetris::EraseLine(int line)
     {
-        for (int row{ y }; row < GetHeight() - 1; ++row)
+        for (int row{ line }; row < GetHeight() - 1; ++row)
         {
             for (int col{ 0 }; col < GetWidth(); ++col)
             {

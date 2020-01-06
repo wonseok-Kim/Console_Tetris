@@ -62,11 +62,11 @@ namespace ws
 
         for (const auto& pos : mBlockPos)
         {
-            if (pos.x <= 0)
+            if (pos.x == game.GetWidth() - 1)
                 bMovePossible = false;
 
-            if (auto temp{ game.GetShape(pos.x - 1, pos.y) };
-                temp == Shape::stack || temp == Shape::boundary)
+            if (auto temp{ game.GetShape(pos.x + 1, pos.y) };
+                temp == Shape::stack)
                 bMovePossible = false;
         }
         if (bMovePossible)
@@ -79,11 +79,11 @@ namespace ws
 
         for (const auto& pos : mBlockPos)
         {
-            if (pos.x == game.GetWidth() - 1)
+            if (pos.x == 0)
                 bMovePossible = false;
 
-            if (auto temp{ game.GetShape(pos.x + 1, pos.y) };
-                temp == Shape::stack || temp == Shape::boundary)
+            if (auto temp{ game.GetShape(pos.x - 1, pos.y) };
+                temp == Shape::stack)
                 bMovePossible = false;
         }
         if (bMovePossible)

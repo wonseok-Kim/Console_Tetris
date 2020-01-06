@@ -17,22 +17,23 @@ namespace ws
             , mbBlockIsCreated{ false }
         {
             inputHandler.SetCommand(KEY_RIGHT) = new CommandMoveRight{};
-            inputHandler.SetCommand(KEY_LEFT) = new CommandMoveLeft{};
-            inputHandler.SetCommand(KEY_Z) = new CommandTurnLeft{};
-            inputHandler.SetCommand(KEY_X) = new CommandTurnRight{};
+            inputHandler.SetCommand(KEY_LEFT)  = new CommandMoveLeft{};
+            inputHandler.SetCommand(KEY_DOWN)  = new CommandMoveDown{};
+            inputHandler.SetCommand(KEY_Z)     = new CommandTurnLeft{};
+            inputHandler.SetCommand(KEY_X)     = new CommandTurnRight{};
         }
 
-        void Update() override;
+        void Update() override; // Game main logic
 
         void ExitGame();  
 
         bool IsStackable();
 
-        void ShowEffect(int y);
+        void SetEffectLine(int line);
 
         void CheckLines();
 
-        void BombOneLine(int y);
+        void EraseLine(int line);
 
         bool IsFullLine(int y);
 
@@ -45,7 +46,5 @@ namespace ws
         bool mbBlockIsCreated;
     };
 }
-
-
 
 #endif // !TETRIS_H
