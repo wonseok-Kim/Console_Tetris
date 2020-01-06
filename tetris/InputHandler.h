@@ -6,7 +6,7 @@
 #include "Command.h"
 
 namespace ws
-{
+{  
     class InputHandler
     {
     public:
