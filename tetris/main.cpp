@@ -16,8 +16,8 @@ int main()
     std::cout << "block rotating: use z  and x\n";
     std::cout << "\nPress any key to start game.\n";
 
-    std::cout << _getch();
-    std::system("cls");
+    std::cout << ::_getch();
+    ::system("cls");
 
     ws::Tetris{ width, height }.Run();
       

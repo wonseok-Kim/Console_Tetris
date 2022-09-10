@@ -89,8 +89,8 @@ namespace ws
     
     void ConsoleEngine::init()
     {
-        std::srand(static_cast<unsigned>(std::time(0)));
-        std::rand();  // learncpp.com에서 VS는 첫 rand()값을 버려야 된다네요.
+        ::srand(static_cast<unsigned>(std::time(0)));
+        ::rand();  // learncpp.com에서 VS는 첫 rand()값을 버려야 된다네요.
 
         // make cursor nonvisible
         CONSOLE_CURSOR_INFO cursorInfo = { 0, };
